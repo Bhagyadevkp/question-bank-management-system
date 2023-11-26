@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Question bank
+{% endblock title %}
+{% block content %}
+
+
+<main class="lg:px-28 md:py-24 lg:py-14 px-10 py-6 min-h-screen">
+    <div class=" flex justify-between  pt-36 md:pt-14">
+        <div class="">
+            <div>
+                <h1 class="text-2xl text-slate-700">
+                    Find Questions
+                </h1>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- start of primary dropdowns -->
+    <div class="rounded shadow-xl mb-10 mt-5 bg-gray-100">
+        <form action="/category/" method="get">
+            <div class="hover:bg-slate-200 rounded-t-md">
+                <select name="university" id="university"
+                    class="px-4 form-select mySelect block outline-none cursor-pointer border-0 rounded-t-md font-semibold text-sm bg-gray-100 w-full h-12">
+                    <option class="text-xl" value="" selected="selected">University</option>
+                    {% for i in un %}
+                    <option class="text-xl" value="{{i.id}}">{{i.university_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="hover:bg-slate-200 rounded-t-md">
+                <select name="department" id="department"
+                    class="px-4 form-select mySelect block outline-none cursor-pointer border-0 font-semibold text-sm bg-gray-100 w-full h-12">
+                    <option class="text-xl" value="" selected="selected">Department</option>
+                    {% for i in de %}
+                    <option class="text-xl" value="{{i.id}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="hover:bg-slate-200 rounded-t-md">
+                <select name="semester" id="semester"
+                    class="px-4 form-select mySelect block outline-none cursor-pointer border-0 font-semibold text-sm bg-gray-100 w-full h-12">
+                    <option class="text-xl" value="" selected="selected">Semester</option>
+                    <option class="text-xl" value="s1">1st semester</option>
+                    <option class="text-xl" value="s2">2nd semester</option>
+                    <option class="text-xl" value="s3">3rd semester</option>
+                    <option class="text-xl" value="s4">4th semester</option>
+                    <option class="text-xl" value="s5">5th semester</option>
+                    <option class="text-xl" value="s6">6th semester</option>
+                </select>
+            </div>
+            <div class="hover:bg-slate-200 rounded-t-md">
+                <select name="subject" id="subject"
+                    class="px-4 form-select mySelect block outline-none cursor-pointer border-0 font-semibold text-sm bg-gray-100 w-full h-12">
+                    <option class="text-xl" value="" selected="selected">Subject</option>
+                    {% for i in su %}
+                    <option class="text-xl" value="{{i.id}}">{{i.subject}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="flex gap-1 md:justify-end ">
+                <input type="submit" value="Submit" id="submit"
+                    class="text-white lg:w-1/6 w-1/2 h-10 bg-slate-500 hover:bg-slate-700 cursor-pointer rounded-bl-md md:rounded-none transition duration-150 ease-in-out">
+                <button type="button" formaction="/"
+                    class="text-white w-1/2 lg:w-1/6 h-10 bg-slate-500 hover:bg-slate-700 cursor-pointer rounded-br-md transition duration-150 ease-in-out"><a
+                        href="/" class="w-auto h-full">
+                        <div class="h-full flex justify-center items-center">Clear all filters</div>
+                    </a></button>
+            </div>
+        </form>
+    </div>
+    <!-- end of primary dropdowns -->
+    <div class="md:flex md:justify-between">
+        <div class="mb-5">
+            <div class="py-2">{% for i in qu %}
+                <h4>{% if forloop.last %}{{ forloop.counter}} results{% endif %} </h4>
+                {% endfor %}
+            </div>
+            <div class=" rounded-md flex">
+                <p class="py-2 pl-1 font-medium">Sort by</p>
+                <form action="/sort/" method="get">
+                    <select name="sort" id="" class=" border-none">
+                        <option value="recent" class="text-sm">Most Recent</option>
+                        <option value="asked" class="text-sm">Most Asked</option>
+                        <option value="important" class="text-sm">Important</option>
+                    </select>
+                    <input type="submit" value="Apply"
+                        class="bg-slate-500 hover:bg-slate-700 text-white p-2 rounded transition ease-in-out duration-300 cursor-pointer">
+                </form>
+            </div>
+        </div>
+        <div class="md:mt-9">
+            <form action="/search" method="get" class="w-full flex">
+                <div>
+                    <input type="search"
+                        class="form-control relative flex-auto min-w-0 block w-56 md:w-auto px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded md:rounded-none md:rounded-l-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        placeholder="Search with keywords" name="q">
+                </div>
+                <div>
+                    <button type="submit"
+                        class="px-6 py-2.5 bg-slate-500 text-white font-medium text-xs leading-tight uppercase rounded md:rounded-r-lg shadow-md hover:bg-slate-700 hover:shadow-lg focus:bg-slate-800  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-slate-800 active:shadow-lg transition duration-150 ease-in-out items-center">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="w-4"
+                            role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="currentColor"
+                                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="mt-3 ml-2 md:hidden">
+        <h4 class="text-slate-500">Tap on the question to view answer</h4>
+    </div>
+    <!-- sort ends -->
+    <!-- question answers -->
+    {% if qu %}
+    <form method="post" action="/print/">
+        {% for i in qu %}
+        <div class="w-full bg-slate-200 px-9 py-4 my-5 md:hover:bg-slate-300 transition ease-in-out duration-500"
+            title="Click on the question to view the answer">
+            <details class="list-none cursor-pointer ">
+                <summary class="list-none mb-2 grid">
+                    <div>
+                        <span><input type="checkbox" name="printQ" value="{{i.id}}">&nbsp;&nbsp;</span>
+                        <span class="font-medium">{{forloop.counter}}.</span>{{i.ques}}. <span
+                            class="font-medium ">({{i.year}})</span>
+                    </div>
+                </summary>
+                <p><span class="font-medium">A.</span> {{i.answer}}.</p>
+                <div class="flex items-end justify-end object-right"><a href="/detail/{{i.id}}"
+                        class="text-right text-blue-700 hover:font-semibold hover:text-blue-500"
+                        title="click to see more details about this question">More Details</a></div>
+            </details>
+        </div>
+        {% endfor %}
+        <div class="flex justify-end">
+            <input
+                class="rounded bg-slate-600 hover:bg-slate-500 hover:rounded-lg transition ease-in-out duration-500 w-full sm:w-min font-semibold text-white p-3 px-12"
+                type="submit" value="Print" title="Print or save as PDF">
+        </div>
+    </form>
+    <!-- end of question answers -->
+    {% else %}
+    <div class="grid object-center items-center justify-center py-24 sm:py-40 ">
+        <h4 class="text-4xl text-slate-600">Not found what you are looking for?<br><span class="text-xl"><a href="/"
+                    class="text-blue-900 font-semibold underline"> Clear all filters</a> and try searching
+                properly</span></h4>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

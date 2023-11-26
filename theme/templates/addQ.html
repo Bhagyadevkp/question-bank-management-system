@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+Add question
+{% block title %}
+Question bank
+{% endblock title %}
+{% block style %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link href="{% static 'css/base.css' %}" rel="stylesheet">
+{% endblock style %}
+{% block content %}
+<main class="min-h-screen">
+    <div class="pt-44 lg:pt-28 pb-8 flex ">
+        <div class="w-full ">
+            <div>
+                <h1 class="text-2xl mx-10 lg:mx-52 mb-4 text-slate-700">Add Questions</h1>
+                {% if user.is_authenticated %}
+                {% else %}
+                <h4 class="text-red-600 mx-12 lg:mx-56 text-lg">Please login to add questions</h4>
+                {% endif %}
+            </div>
+            <div class="mx-12 lg:mx-56">
+                <form action="." method="post">
+                    {% csrf_token %}
+                    <label for="ques" class="text-lg text-slate-700">Question <span
+                            class="text-red-600">*</span></label>
+                    {{form.ques}}
+                    <label for="answer" class="text-lg text-slate-700">Answer <span
+                            class="text-red-600">*</span></label>
+                    {{form.answer}}
+                    <label for="id_university_select" class="text-lg text-slate-700">University <span
+                            class="text-red-600">*</span></label>
+                    {{form.university_select}}
+                    <label for="id_department_select" class="text-lg text-slate-700">Department <span
+                            class="text-red-600">*</span></label>
+                    {{form.department_select}}
+                    <label for="subject" class="text-lg text-slate-700">Subject <span
+                            class="text-red-600">*</span></label>
+                    {{form.subject}}
+                    <label for="semester" class="text-lg text-slate-700">Semester <span
+                            class="text-red-600">*</span></label>
+                    {{form.semester}}
+                    <div class="lg:flex justify-between">
+                        <div class="mr-5 w-full">
+                            <label for="year" class="text-lg text-slate-700">Year <span
+                                    class="text-red-600">*</span></label>
+                            {{form.year}}
+                        </div>
+                        <div class=" mb-2 w-full">
+                            <label for="timesAsked" class="text-lg text-slate-700">Times asked(optional) </label>
+                            {{form.timesAsked}}
+                        </div>
+                    </div>
+                    <label for="comment" class="text-lg text-slate-700">Comments</label>
+                    {{form.comment}}
+                    {{form.important}}
+                    <label for="id_important">This question important</label><br>
+                    <input type="checkbox" name="terms" id="terms" required> I Agree this question was asked on
+                    mentioned date <br><br>
+				{% if user.is_authenticated %}
+                    <input type="submit" value="Submit" id="submit"
+                        class="text-white lg:w-2/5 w-36 h-10 bg-slate-700 rounded">
+                    <input type="reset" class="text-white w-36 lg:w-2/5 h-10 bg-slate-700 rounded">
+                    {% else %}
+                    <h4 class="text-red-600 text-lg">Please login to add questions</h4>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        <div></div>
+    </div>
+    <div></div>
+</main>
+{% block js %}
+{% include "js2.html" %}
+{% endblock %}
+{% endblock %}
